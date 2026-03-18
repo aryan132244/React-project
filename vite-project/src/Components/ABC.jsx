@@ -1,24 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { FaBars } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
-
 export default function ABC() {
-
-
-    const [a, b] = useState("")
+    const [text, setText] = useState("");
 
     const uppercase = () => {
-        b(a.toUpperCase())
-    }
+        setText(text.toUpperCase());
+    };
 
     const lowercase = () => {
-        b(a.toLowerCase())
-    }
+        setText(text.toLowerCase());
+    };
 
-    const Delete = () => {
-        b("")
-    }
+    const handleDelete = () => {
+        setText("");
+    };
 
     const menu = [
         { href: "/", Name: "home" },
@@ -26,68 +23,62 @@ export default function ABC() {
         { href: "/", Name: "contact" },
         { href: "/", Name: "Info" },
         { href: "/", Name: "menu" }
-    ]
+    ];
 
-    const [open, close] = useState(false)
+    const [open, setOpen] = useState(false);
 
-    const togglemeu = () => {
-        close(!open)
-    }
-
+    const toggleMenu = () => {
+        setOpen(!open);
+    };
 
     return (
         <>
             <div>
-
                 <br /><br />
-                <input onChange={(e) => b(e.target.value)} value={a} className=' border-black border-2 ' type="text" placeholder='Enter any number' />
-                <br /> <br />
+                <input
+                    onChange={(e) => setText(e.target.value)}
+                    value={text}
+                    className='border-black border-2'
+                    type="text"
+                    placeholder='Enter text'
+                />
+                <br /><br />
+
                 <div className='flex gap-3'>
-                    <button onClick={uppercase} className='bg-amber-200 rounded-lg  px-4 py-1'>UPPERCASE</button>
-
-                    <button onClick={lowercase} className='bg-amber-200 rounded-lg  px-4 py-1'>LOWERCASE</button>
-
-                    <button onClick={Delete} className='bg-amber-200 rounded-lg  px-4 py-1'>DELETE</button>
-
+                    <button onClick={uppercase} className='bg-amber-200 rounded-lg px-4 py-1'>UPPERCASE</button>
+                    <button onClick={lowercase} className='bg-amber-200 rounded-lg px-4 py-1'>LOWERCASE</button>
+                    <button onClick={handleDelete} className='bg-amber-200 rounded-lg px-4 py-1'>DELETE</button>
                 </div>
                 <br /><br />
             </div>
 
-            <nav className='flex justify-between px-10 bg-black text-white h-10 items-center relative'>
+            <nav className='flex justify-between px-10 bg-linear-to-b from-black to-gray-800 text-white h-10 items-center relative'>
                 <div>logo</div>
 
-                <ul className='  hidden md:flex gap-5'>
-
-                    {
-                        menu.map((v, i) => (
-                            <li key={i}><a href={v.href}>{v.Name}</a></li>
-                        ))
-                    }
+                <ul className='hidden md:flex gap-5'>
+                    {menu.map((v) => (
+                        <li key={v.Name} className='hover:text-red-800 duration-300'>
+                            <a href={v.href}>{v.Name}</a>
+                        </li>
+                    ))}
                 </ul>
-                <button className=' hidden md:block'>login</button>
-                <div className=' block md:hidden' onClick={togglemeu}>
-                    {
-                        open ? <RxCross2 /> : <FaBars />
-                    }
+
+                <button className='hidden md:block cursor-pointer'>login</button>
+
+                <div className='block md:hidden' onClick={toggleMenu}>
+                    {open ? <RxCross2 /> : <FaBars />}
                 </div>
-                {
-                    open &&(
-                        <ul className=' bg-gray-800 text-white  w-full left-0 absolute top-10 flex flex-col gap-2'>
 
-                            {
-                                menu.map((v, i) => (
-                                    <li key={i}><a href={v.href}>{v.Name}</a></li>
-                                ))
-                            }
-
-                        </ul>
-                    )
-                }
-
-
+                {open && (
+                    <ul className='bg-gray-800 text-white w-full left-0 absolute top-10 flex flex-col gap-4 p-4'>
+                        {menu.map((v) => (
+                            <li key={v.Name}>
+                                <a href={v.href}>{v.Name}</a>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </nav>
-
         </>
-    )
+    );
 }
-
